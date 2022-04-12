@@ -1,0 +1,41 @@
+package chap06_07.Ex02;
+
+import java.util.Scanner;
+
+public class Test_T {
+	// 내가 한 거랑 비교하면 매우 세련되고 훌륭하다, 반복적으로 보자
+	
+	static void math(String...values) {
+		int sum = 0;  		// 들어오는 정수를 합하는 변수
+		double avg;			// 평균값을 구하는 변수
+		
+		for(int i = 0; i < values.length; i++) {
+//			sum += values[i]; 	// values[i] 번째 방의 값이 String 타입이므로 정수타입으로 변환이 필요하다
+			sum += Integer.parseInt(values[i]);
+					// Integer.parseInt(String) : String 타입을 정수로 변환 
+		}
+		
+		avg = (double) sum/values.length;  	// 평균은 형변환이 반드시 필요
+		System.out.println();
+		System.out.println("임의로 들어온 합계는 : " + sum);
+		System.out.println("임의로 들어온 값의 평균은 : " + avg);
+	}
+	
+	public static void main(String[] args) {
+		//스캐너로 임의의 정수 값을 할당 받아서 합계와 평균을 출력
+		Scanner sc = new Scanner(System.in);
+		System.out.println("정수 값을 공백을 넣어서 입력하세요. >>>");
+		
+		String num = sc.nextLine(); // 공백이 들어가므로 전체 정수 값을 String
+		String[] array1 = num.split(" "); //split은 구분자를 기준으로 글자를 잘라서 배열에 저장 <==== 이것도 훌륭하다
+		
+		System.out.print("당신이 입력한 정수는 : ");
+		for(int i = 0; i < array1.length; i++) { 		// 입력 값을 출력
+			System.out.print(array1[i] + " ");
+		}
+		
+		math(array1);  // 가변 길이 메소드 math를 호출하면서 매개변수로 array1을 넣어주면 된다
+		
+	}
+
+}
