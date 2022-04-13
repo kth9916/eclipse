@@ -28,6 +28,7 @@ public class EX3_Exception1_difficult {
 		} catch (FileNotFoundException e) {
 			System.out.println("파일이 존재하지 않습니다.");
 		}
+		
 		int data = 0;
 		try {
 			while((data = is1.read(arr)) != -1) {
