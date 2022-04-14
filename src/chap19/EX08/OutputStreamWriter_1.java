@@ -1,6 +1,7 @@
 package chap19.EX08;
 
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +19,8 @@ public class OutputStreamWriter_1 {
 		// 1. FileWriter를 통해서 데이터 쓰기(Default : MS949)
 		File osw1 = new File("src/chap19/EX08/osw1.txt");	// MS949
 		File osw2 = new File("src/chap19/EX08/osw2.txt"); 	// UTF-8
+		
+		// 저장이 잘 안되면 이클립스 외부에 저장하면 잘 적응됨.
 		
 		try (Writer writer = new FileWriter(osw1);){
 			
