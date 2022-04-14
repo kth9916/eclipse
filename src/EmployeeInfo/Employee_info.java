@@ -1,18 +1,27 @@
 package EmployeeInfo;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
-class Employee{		// 사원의 정보를 담은 클래스
+
+import java.util.Iterator;
+
+
+import java.util.Objects;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+
+
+
+class Employee implements Comparable<Employee>{		// 사원의 정보를 담은 클래스
 	
 	
 	
-	int empNo; 			// 사원번호
-	String empName;		// 사원이름
-	String phone;		// 연락처
-	int age;			// 나이
-	String dept;		// 부서
-	String compRank;	// 직급
+	private int empNo; 			// 사원번호
+	private String empName;		// 사원이름
+	private String phone;		// 연락처
+	private int age;			// 나이
+	private String dept;		// 부서
+	private String compRank;	// 직급
 	
 	public Employee(int empNo, String empName, String phone, int age, String dept, String compRank) {
 		this.empNo = empNo;
@@ -21,6 +30,33 @@ class Employee{		// 사원의 정보를 담은 클래스
 		this.age = age;
 		this.dept = dept;
 		this.compRank = compRank;
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		if(this.empNo <o.empNo) {
+			return -1;
+		} else if(this.empNo == o.empNo) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Employee) {
+			if(empNo == ((Employee)obj).empNo) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(empNo);
 	}
 
 	public int getEmpNo() {
@@ -71,15 +107,13 @@ class Employee{		// 사원의 정보를 담은 클래스
 		this.compRank = compRank;
 	}
 	
-	
-	
 }
 
 // do while문 써서 1번 누르면 
 
 public class Employee_info {
 	
-	private static ArrayList<Employee> aList = new ArrayList<Employee>();
+	private static TreeSet<Employee> aSet = new TreeSet<Employee>();
 	
 	private static Scanner scanner = new Scanner(System.in);
 	
@@ -100,82 +134,114 @@ public class Employee_info {
 		System.out.println();
 		Employee newMember = new Employee(empNo, empName, phone, age, dept, compRank);
 		
-		aList.add(newMember);
+		aSet.add(newMember);
 		
-		System.out.println(newMember.empName + "님의 정보가 정상적으로 입력 되었습니다.");
+		System.out.println(empName + "님의 정보가 정상적으로 입력 되었습니다.");
 		
 	}
 	
-	private static void employeeList() {
+	
+	private static void search() {
 		System.out.println("검색하고 싶은 사원의 사번을 입력하세요.");
+		
 		int empNo = scanner.nextInt();
 		
-		Employee employee = findEmployee(empNo);
+
+		
+		Employee employee = searchEmp(empNo);
 		
 		if(employee == null) {
 			System.out.println("해당 사원이 없습니다.");
 			return;
 		}
 		
-		System.out.println("사번 : " + employee.getEmpNo() + "		이름 : " + employee.getEmpName() + "		연락처 : " + employee.getPhone() + "		나이 : " + employee.getAge() + "		부서 : " + employee.getDept() + "		직급 : " + employee.getCompRank());
+		System.out.print("사번\t이름\t연락처\t\t나이\t부서\t직급\t");
+		System.out.println();
+		System.out.print(employee.getEmpNo()+ "\t");
+		System.out.print(employee.getEmpName()+ "\t");
+		System.out.print(employee.getPhone() + "\t");
+		System.out.print(employee.getAge()+ "\t");
+		System.out.print(employee.getDept()+ "\t");
+		System.out.print(employee.getCompRank()+ "\t");
+		System.out.println();
 		
-		
+
 	}
 	
 	private static void modify() {
 		System.out.println("수정하고 싶은 사원의 사번을 입력하세요.");
 		int empNo = scanner.nextInt();
 		
-		Employee employee = findEmployee(empNo);
+		Employee employee = searchEmp(empNo);
 		
 		if(employee == null) {
 			System.out.println("해당 사원이 없습니다.");
 			return;
 		}
 		
-		System.out.println("사원의 수정할 연락처를 입력하세요.");
-		String phone = scanner.next();
-		employee.setPhone(phone);
+		System.out.print("사원의 수정하고 싶은 필드 선택 [1. 연락처, 2. 나이, 3. 부서, 4. 직급 5. 수정 종료] :");
 		
-		System.out.println("사원의 수정할 나이를 입력하세요.");
-		int age = scanner.nextInt();
-		employee.setAge(age);
 		
-		System.out.println("사원의 수정할 부서를 입력하세요.");
-		String dept = scanner.next();
-		employee.setDept(dept);
 		
-		System.out.println("사원의 수정할 직급를 입력하세요.");
-		String compRank = scanner.next();
-		employee.setCompRank(compRank);
+		boolean run = true;
+		while(run) {
+			int modiNo = scanner.nextInt();
+			switch (modiNo) {
+			case 1: 
+				System.out.println("사원의 수정할 연락처를 입력하세요.");
+				String phone = scanner.next();
+				employee.setPhone(phone);
+				System.out.println("수정 완료했습니다.");
+				break;
+			case 2: 
+				System.out.println("사원의 수정할 나이를 입력하세요.");
+				int age = scanner.nextInt();
+				employee.setAge(age);
+				System.out.println("수정 완료했습니다.");
+				break;
+			case 3:
+				System.out.println("사원의 수정할 부서를 입력하세요.");
+				String dept = scanner.next();
+				employee.setDept(dept);
+				System.out.println("수정 완료했습니다.");
+				break;
+			case 4:
+				System.out.println("사원의 수정할 직급를 입력하세요.");
+				String compRank = scanner.next();
+				employee.setCompRank(compRank);
+				System.out.println("수정 완료했습니다.");
+				break;
+			case 5:
+				run = false;
+				break;
+		}
+		}
 	}
 	
 	private static void erase() {
 		System.out.println("삭제하고 싶은 사원의 사번을 입력하세요.");
 		int empNo = scanner.nextInt();
 		
-		Employee employee = findEmployee(empNo);
+		Employee employee = searchEmp(empNo);
 		
 		if(employee == null) {
 			System.out.println("해당 사원이 없습니다.");
 			return;
 		}
 		
-		aList.remove(employee);
+		aSet.remove(employee);
+		System.out.println("삭제 완료되었습니다.");
 	}
 	
-	private static Employee findEmployee(int empNo) {
-		Employee employee = null;
-		for(int i = 0; i < aList.size(); i++) {
-			if(aList.get(i) != null) {
-				int dbNo = aList.get(i).getEmpNo();
-				if(dbNo == empNo) {
-					employee = aList.get(i);
-					break;
-				}
+	private static Employee searchEmp(int empNo) {
+		Iterator<Employee> iter = aSet.iterator();
+		while(iter.hasNext()) {
+			Employee employee = iter.next();
+			if(empNo == employee.getEmpNo()) {
+				return employee;
 			}
 		}
-		return employee;
+		return null;
 	}
 	
 	public static void main(String[] args) {
@@ -194,20 +260,26 @@ public class Employee_info {
 			
 			int selectNo = scanner.nextInt();
 			
-			if(selectNo == 1) {
+			switch (selectNo) {
+			case 1: 
 				createMember();
-			}else if(selectNo == 2) {
-				employeeList();
-			}else if(selectNo == 3) {
+				break;
+			case 2: 
+				search();
+				break;
+			case 3: 
 				modify();
-			}else if(selectNo == 4) {
+				break;
+			case 4: 
 				erase();
-			}else if(selectNo == 5) {
+				break;
+			case 5: 
 				run = false;
 				break;
 			}
 		}
-		scanner.close();
+		
+		
 		System.out.println("프로그램이 종료 되었습니다.");
 	}
 }
