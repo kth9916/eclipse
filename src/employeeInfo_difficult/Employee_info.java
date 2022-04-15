@@ -1,8 +1,9 @@
-package EmployeeInfo;
+package employeeInfo_difficult;
 
 
 
 import java.util.Iterator;
+
 
 
 import java.util.Objects;
@@ -110,6 +111,11 @@ class Employee implements Comparable<Employee>{		// 사원의 정보를 담은 클래스
 }
 
 // do while문 써서 1번 누르면 
+// Treeset : 중복된 데이터를 저장할 수 없다. Wrapper 클래스는 재정의 되어 있다. equals(), hashCode()
+		// 정렬되어서 저장,
+			// 일반객체를 set 자료형에 저장할때는 객체의 특정필드가 중복 저장되지 않도록 equals(), hashCode() 재정의 해야한다.
+	// Wrapper : 기본자료형을 객체와 기본자료형에는 없는 메소드가 추가.(Boolean, Byte, Character, Integer, Double ...)
+		// Comparable compareTo() : 상속해서 구현, 객체 수정, ||| Comparator  compare() : 수정없이 사용가능
 
 public class Employee_info {
 	
